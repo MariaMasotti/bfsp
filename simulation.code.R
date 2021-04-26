@@ -5,7 +5,7 @@ job = as.numeric(Sys.getenv('SLURM_ARRAY_TASK_ID'))
 
 cat(paste0("Processing Job #", job, "\n"))
 
-################### functions ######################
+################### functions #####################
 
 a2c<-function(x,y,center){
   shift.x<-x-center[1]
