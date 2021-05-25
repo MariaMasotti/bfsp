@@ -1,3 +1,4 @@
+library(Rfast);library(fields);library(FastGP);library(sparseMVN);library(extraDistr);library(Matrix);library(ggplot2)
 
 
 a2c<-function(x,y,center){
@@ -369,7 +370,7 @@ bfsp<-function(loc,value,iterations,burn,N,inits,xlim,ylim){
       }
     }
     
-    if(i %% 100== 0) cat(paste(100*i/iterations,"% complete","\n"))
+    if(i %% 1000== 0) cat(paste(100*i/iterations,"% complete","\n"))
     
   }
   end.time <- Sys.time()
@@ -388,7 +389,7 @@ plot_bfsp<-function(result,loc,value,credible.band){
   X<-cbind2(cbind2(1,sin(outer(a2c(x,y,param[1:2]),(1:N)))),cos(outer(a2c(x,y,param[1:2]),(1:N))))
   XB<-X%*%param[5:(5+2*N)]
   bp<-cbind(x=XB*sin(a2c(x,y,param[1:2]))+param[1],y=XB*cos(a2c(x,y,param[1:2]))+param[2])
-  plot<-ggplot(cbind.data.frame(x,y,value),aes(x,y))+geom_tile(aes(fill=value))+geom_point(data=as.data.frame(bp),aes(V1,V2),size=.5)+scale_fill_distiller(palette = "Spectral", direction = -1)
+  plot<-ggplot(cbind.data.frame(x,y,value),aes(x,y))+geom_tile(aes(fill=value))+geom_point(data=as.data.frame(bp),aes(V1,V2),size=.5)+scale_fill_distiller(palette = "Spectral", direction = -1)+theme_minimal()+theme(axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank(),axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),panel.grid = element_blank(),panel.background = element_blank(),panel.grid.major.x=element_blank(),legend.position = "none")
   
   if(credible.band==T){
     n<-dim(result[[1]])[1]
